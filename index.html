@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Personal Expense Tracker</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <section id="authScreen" class="panel" style="max-width:460px;margin:40px auto;padding:24px">
+    <h2>Personal Expense Tracker</h2><p class="muted">Create an account or sign in to save your records.</p>
+    <form id="authForm" class="form-grid">
+      <label>Email<input id="authEmail" type="email" required autocomplete="email"></label>
+      <label>Password<input id="authPassword" type="password" required minlength="8" autocomplete="current-password"></label>
+      <div class="form-actions full-width"><button class="primary" type="submit" id="authSubmit">Sign in</button><button class="secondary" type="button" id="toggleAuth">Create account</button></div>
+    </form><p id="authMessage" class="muted"></p>
+  </section>
+  <div id="appScreen" class="hidden">
+  <header class="topbar"><div class="brand"><span class="brand-icon">₵</span><div><h1>My Money</h1><p>Personal Expense Tracker</p></div></div><div class="month-picker"><label for="monthFilter">Month</label><input id="monthFilter" type="month"><button class="secondary" id="logoutBtn" type="button">Log out</button></div></header>
+  <main class="container">
+    <section class="welcome"><div><p class="eyebrow">YOUR FINANCES AT A GLANCE</p><h2>Take control of your money.</h2><p class="muted">Track income, expenses and monthly budgets in one place.</p></div><button class="primary" id="newTransactionBtn">＋ Add transaction</button></section>
+    <section class="summary-grid">
+      <article class="summary-card"><div class="card-label">Total income</div><div class="summary-value income" id="incomeTotal">UGX 0</div><div class="card-foot">Money received this month</div></article>
+      <article class="summary-card"><div class="card-label">Total expenses</div><div class="summary-value expense" id="expenseTotal">UGX 0</div><div class="card-foot">Money spent this month</div></article>
+      <article class="summary-card"><div class="card-label">Net balance</div><div class="summary-value" id="balanceTotal">UGX 0</div><div class="card-foot">Income minus expenses</div></article>
+      <article class="summary-card"><div class="card-label">Transactions</div><div class="summary-value" id="transactionCount">0</div><div class="card-foot">Records this month</div></article>
+    </section>
+    <section class="panel" id="transactionPanel"><div class="panel-heading"><div><h3>Transactions</h3><p class="muted">Add, view, edit or delete your records.</p></div><div class="filters"><select id="typeFilter"><option value="">All types</option><option value="income">Income</option><option value="expense">Expense</option></select><input id="searchInput" placeholder="Search transactions…" aria-label="Search transactions"></div></div>
+      <form id="transactionForm" class="form-grid hidden">
+        <input type="hidden" id="transactionId">
+        <label>Title<input id="title" required maxlength="100" placeholder="e.g. Transport to campus"></label>
+        <label>Amount (UGX)<input id="amount" type="number" min="0.01" step="0.01" required placeholder="e.g. 5000"></label>
+        <label>Type<select id="type" required><option value="expense">Expense</option><option value="income">Income</option></select></label>
+        <label>Category<select id="category" required><option>Food</option><option>Transport</option><option>Rent</option><option>School</option><option>Shopping</option><option>Health</option><option>Utilities</option><option>Salary</option><option>Business</option><option>Gift</option><option>Other</option></select></label>
+        <label>Date<input id="date" type="date" required></label>
+        <label>Payment method<select id="paymentMethod"><option>Cash</option><option>Mobile Money</option><option>Bank</option><option>Card</option><option>Other</option></select></label>
+        <label class="full-width">Notes (optional)<input id="notes" maxlength="500" placeholder="Add a short note"></label>
+        <div class="form-actions full-width"><button class="primary" type="submit" id="saveBtn">Save transaction</button><button class="secondary" type="button" id="cancelBtn">Cancel</button></div>
+      </form>
+      <div class="table-wrap"><table><thead><tr><th>Transaction</th><th>Category</th><th>Date</th><th>Payment</th><th>Amount</th><th>Actions</th></tr></thead><tbody id="transactionsBody"><tr><td colspan="6" class="empty">Loading transactions…</td></tr></tbody></table></div>
+    </section>
+    <section class="panel"><div class="panel-heading"><div><h3>Monthly budgets</h3><p class="muted">Set a spending limit for a category.</p></div><button class="secondary" id="toggleBudgetBtn">＋ Add budget</button></div>
+      <form id="budgetForm" class="form-grid hidden"><input type="hidden" id="budgetId"><label>Category<select id="budgetCategory"><option>Food</option><option>Transport</option><option>Rent</option><option>School</option><option>Shopping</option><option>Health</option><option>Utilities</option><option>Other</option></select></label><label>Monthly limit (UGX)<input id="budgetLimit" type="number" min="0.01" step="0.01" required></label><label>Month<input id="budgetMonth" type="month" required></label><div class="form-actions"><button class="primary" type="submit" id="saveBudgetBtn">Save budget</button><button class="secondary" type="button" id="cancelBudgetBtn">Cancel</button></div></form>
+      <div id="budgetsList" class="budgets-list"><p class="empty">No budgets for this month yet.</p></div>
+    </section>
+    <section class="panel"><div class="panel-heading"><div><h3>Spending by category</h3><p class="muted">A live summary of your expenses for the selected month.</p></div></div><canvas id="categoryChart" height="110"></canvas></section>
+    <p class="footer-note">Demo project for learning database CRUD operations. Data is stored in your configured MongoDB database.</p>
+  </main>
+  </div>\n  <div id="toast" class="toast" role="status"></div>
+  <script src="/app.js"></script>
+</body></html>
